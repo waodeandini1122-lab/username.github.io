@@ -1,43 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Posyandu Sehat</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Everything U Are - Hindia</title>
+    <style>
+        body {
+            background: #111;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .player {
+            background: #1c1c1c;
+            padding: 25px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        h1, h3 {
+            text-align: center;
+        }
+
+        h3 {
+            color: #aaa;
+            font-weight: normal;
+        }
+
+        audio {
+            width: 100%;
+            margin: 15px 0;
+        }
+
+        .aktif {
+            color: #1db954;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
-<div class="header">
-    <h1>POSYANDU SEHAT</h1>
-    <p>RW 001 Kelurahan Selada</p>
+<div class="player">
+    <h1>Everything U Are</h1>
+    <h3>Hindia</h3>
+
+    <audio id="audio" controls autoplay>
+        <source src="everything-u-are.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="lirik"></div>
 </div>
 
-<ul class="menu">
-    <li><a href="#">Beranda</a></li>
-    <li><a href="#">Profil</a></li>
-    <li><a href="#">Kegiatan</a></li>
-    <li><a href="#">Kontak</a></li>
-</ul>
+<script>
+    const lirikData = [
+        { time: 2, text: "Tinggi ke angkasa menantang dunia" },
+        { time: 7, text: "Merayakan muda tuk satu jam saja" },
+        { time: 13, text: "Kita hampir mati dan kau selamatkan aku" },
+        { time: 19, text: "Dan ku menyelamatkanmu dan sekarang aku tahu" },
+        { time: 26, text: "Cerita kita tak jauh berbeda" },
+        { time: 31, text: "Got beat down by the world sometimes I wanna fold" },
+        { time: 38, text: "Namun suratmu kan ku ceritakan ke anak-anakku nanti" },
+        { time: 46, text: "Bahwa aku pernah dicintai with everything u are" },
+        { time: 55, text: "Fully as I am with everything u are" }
+    ];
 
-<div class="content">
-    <h2>Selamat Datang</h2>
-    <p>
-        Website ini berisi informasi kegiatan Posyandu, jadwal pelayanan,
-        serta data umum Posyandu RW 001.
-    </p>
+    const audio = document.getElementById("audio");
+    const lirik = document.getElementById("lirik");
 
-    <h3>Jadwal Kegiatan</h3>
-    <ul>
-        <li>Penimbangan Balita</li>
-        <li>Pemeriksaan Ibu Hamil</li>
-        <li>Pemberian Imunisasi</li>
-    </ul>
+    lirikData.forEach((item, i) => {
+        const p = document.createElement("p");
+        p.id = "line" + i;
+        p.innerText = item.text;
+        lirik.appendChild(p);
+    });
 
-    <img src="foto.jpg" alt="Kegiatan Posyandu">
-</div>
-
-<div class="footer">
-    <p>© 2026 Posyandu Sehat RW 001</p>
-</div>
+    audio.addEventListener("timeupdate", () => {
+        const t = audio.currentTime;
+        lirikData.forEach((item, i) => {
+            const line = document.getElementById("line" + i);
+            if (t >= item.time && (!lirikData[i+1] || t < lirikData[i+1].time)) {
+                line.classList.add("aktif");
+            } else {
+                line.classList.remove("aktif");
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
